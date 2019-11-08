@@ -1,0 +1,10 @@
+{
+    "name": "sele/speeder",
+    "authors": [
+        {
+            "name": "Sele Shabani",
+            "email": "sele@example.com"
+        }
+    ],
+    "require": {}
+}

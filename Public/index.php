@@ -1,4 +1,6 @@
 <?php
+ 
+ ;
  use Speeder\Http\Request;
  use App\App;
  use Speeder\Debug\Debugger;
