@@ -1,0 +1,33 @@
+{
+    "#^/$#":{
+        "controller":"\\App\\Controller\\DefaultController::index",
+        "name":"accueil",
+        "url":"/"
+    },
+    "#^/about$#i": {
+        "controller": "\\App\\Controller\\DefaultController::about",
+        "name":"about",
+        "url":"/about"
+    },
+    "#^/blog$#i": {
+        "controller": "\\App\\Controller\\BlogController::index",
+        "name": "blog",
+        "url": "/blog"
+    }
+    ,
+    "#^/blog/[0-9]{1,}$#i": {
+        "controller": "\\App\\Controller\\BlogController::show",
+        "name": "blog_show",
+        "url": "/blog/:id",
+        "params":{
+            "id":2
+        },
+        "ls":"/"
+        
+    },
+    "#^/add$#i":{
+        "controller": "\\App\\Controller\\BlogController::add",
+        "name": "add",
+        "url": "/add"
+    }
+}

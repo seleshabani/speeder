@@ -1,0 +1,12 @@
+<?php
+
+use Speeder\Console\Application;
+use Speeder\Debug\Debugger;
+#!/usr/bin/env php
+require dirname(__DIR__).'/vendor/autoload.php';
+$app=new Application();
+
+if($_SERVER['argc']>1){
+    $app->SetArgs($_SERVER['argv']);
+    $app->Check();
+}

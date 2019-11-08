@@ -1,0 +1,10 @@
+/* 
+*feuille de style initiale pour vos projets\
+*@author sele shhabani <seleshabani4@gmail.com>
+*/
+body { background: #F5F5F5; font: 18px/1.5 sans-serif;}
+#container{
+    width: 90%;
+    margin: auto;
+    padding: 2em;
+}

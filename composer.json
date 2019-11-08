@@ -1,0 +1,23 @@
+{
+    "name": "sele/speeder-framework",
+    "description": "mon petit framework",
+    "authors": [
+        {
+            "name": "sele shabani",
+            "email": "seleshabani4@gmail.com"
+        }
+    ],
+    "require": {
+        "twig/twig": "^2.0",
+        "doctrine/orm": "^2.6.2",
+        "fzaninotto/faker": "^1.8",
+        "wisembly/elephant.io": "^3.3"
+    },
+    "autoload":{
+        "psr-4":{
+            "App\\": "App/",
+            "Speeder\\": "vendor/speeder/"
+        }
+    }
+    
+}
