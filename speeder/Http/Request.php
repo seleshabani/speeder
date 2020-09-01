@@ -59,9 +59,10 @@ class Request
      public $server;
 
       /**
-       * method
+       * methode represente la méthode utilisé actuellement pour appeler le site
        */
       protected $method;
+
      /**    
       * cree une requete en appelant la methode initisalise
       */
@@ -122,7 +123,7 @@ class Request
       }
 
       /**
-       * Undocumented function
+       * fonction upload,uploade les fichiers sur le serveur
        *
        * @param [type] $key nom de l'input file
        * @param array $format format supporter
@@ -173,7 +174,7 @@ class Request
       }
 
       /**
-       * Undocumented function
+       * recupère une valeur contenue dans un tableau
        *
        * @param string $params
        * @param string $key
@@ -186,7 +187,7 @@ class Request
       }
 
       /**
-       * Undocumented function
+       * met à jour une valeur contenue dans un tableau
        *
        * @param string $params
        * @param string $key

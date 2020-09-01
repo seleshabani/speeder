@@ -18,6 +18,7 @@ class App extends AppKernel
        $path=$this->GetProjectDir().$this->Ds()."config/Route.json";
        $router=new Router($path);  
        $router->Check($request->Url());
+       
     }
 }
 

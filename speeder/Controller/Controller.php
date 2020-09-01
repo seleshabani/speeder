@@ -18,6 +18,7 @@ class Controller
     public function __construct(Request $request)
     {
         $this->request=$request;
+        //chargement de la configuration de doctrine
         include AppKernel::GetProjectDir().AppKernel::Ds().'config'.AppKernel::Ds().'bootstrap.php';
       
         $path=AppKernel::GetProjectDir().AppKernel::Ds(). "Templates";
@@ -45,6 +46,11 @@ class Controller
         
     }
 
+    /**
+     * Rends une vue en utilisant twig
+     * @param string $views la vue à afficher
+     * @param array $vars les variables à passer à la vue
+     */
     public function RenderByTwig($views,$vars=[])
     {
         if($vars){
@@ -68,11 +74,14 @@ class Controller
         $this->RenderByTwig('Error/404.html');
     }
 
+    /** 
+     * ajoute la fonction path() à twig
+    */
     private function extends()
     {
 
        $function = new \Twig_Function('path', function ($name,$params=[]) {
-
+        
             $path= AppKernel::GetProjectDir().AppKernel::Ds().'config'.AppKernel::Ds().'Route.json';
             $handle=file_get_contents($path);
             $routes=json_decode($handle);
@@ -95,6 +104,7 @@ class Controller
                         return '/'.$infos[0].$infos[1].$t;
                    
                         }else{
+                            
                             return $v->url;
                         }
                     }
