@@ -7,7 +7,7 @@
             "email": "seleshabani4@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "license": "MIT",
     "require": {
         "twig/twig": "^2.0",
