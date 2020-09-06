@@ -9,6 +9,7 @@ $routes=require '../config/Routes.php';
 
 $request=HttpFoundationRequest::createFromGlobals();
 $response=new Response();
+Debugger::Init($request,$response,$routes);
 
 $app=new App('../config/env.json');
  //$app->Handle($request);

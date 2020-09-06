@@ -5,7 +5,7 @@ use Speeder\Kernel\AppKernel;
 
 class MakeFixture
 {
-   protected $manager;
+    protected $manager;
     public function __construct()
     {
         include AppKernel::GetProjectDir().AppKernel::Ds().'config'.AppKernel::Ds().'bootstrap.php';

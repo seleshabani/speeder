@@ -31,11 +31,12 @@ class App extends AppKernel
      */
     public function HandleBySymfonyComponent(HttpFoundationRequest $request,Response $response,RouteCollection $routes)
     {
-        
+       // Debugger::Dump('fff');
+
         $context=new RequestContext();
         $context->fromRequest($request);
         $matcher=new UrlMatcher($routes,$context);
-       // Debugger::Dump($routes->all());
+        
         try {
 
             $resultat=$matcher->match($context->getPathInfo());

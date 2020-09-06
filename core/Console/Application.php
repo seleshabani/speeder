@@ -3,9 +3,9 @@ namespace Speeder\Console;
 
 use Speeder\Debug\Debugger;
 use App\App;
-use Speeder\Builder\QueryBuilder;
 use function Speeder\Debug\Dump;
 use Speeder\Database\Database;
+use Speeder\QueryBuilder\QueryBuilder;
 
 /**
  * classe gerant la console
@@ -214,7 +214,7 @@ class Application
         try {
             $db = new \PDO($dsn, $user, $password);
             return $db;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             echo 'Connexion échouée : ' . $e->getMessage();
         }
     }

@@ -7,13 +7,12 @@
             "email": "seleshabani4@gmail.com"
         }
     ],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "license": "MIT",
     "require": {
         "twig/twig": "^2.0",
         "doctrine/orm": "^2.6.2",
         "fzaninotto/faker": "^1.8",
-        "wisembly/elephant.io": "^3.3",
         "symfony/http-foundation": "^5.1",
         "symfony/routing": "^5.1"
     },

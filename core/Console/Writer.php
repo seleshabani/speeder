@@ -28,7 +28,7 @@ class Writer
      }";
     }
 
-    public function WriteInManager($name)
+    public static function WriteInManager($name)
     {
         return "<?php \n
         namespace App\Manager; \n 
@@ -44,7 +44,7 @@ class Writer
         }";
     }
 
-    public function WriteInEntity($name,$cols=[])
+    public static function WriteInEntity($name,$cols=[])
     {
         $seters='';
         $geters='';
@@ -79,7 +79,7 @@ class Writer
        . '}';
     }
 
-     public function WriteInFixture($name)
+     public static function WriteInFixture($name)
     {
        
 
