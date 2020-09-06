@@ -30,14 +30,16 @@ class RequestMatcher
     {
         
          $flag=false;
-         $request = new Request();
+         $request = new Request();//A remplacer | faire en sorte qu'il soit passé en argument depuis App\App
+
+        // Dump('ici');
         
         //key represente la regex
          foreach ($routes as $key=>$value) {
-          
-           // Dump($key);
+           // Dump(preg_match($key,$url));
+            
            if(preg_match($key,$url)){
-
+            
                 if(property_exists($value,"params")){
 
                     $infos=explode($value->ls,$url);
@@ -48,10 +50,12 @@ class RequestMatcher
                     
                     $request->querys->SetAll($params);
                 }
-
+               
                 //coupe la chaine recuperer du fichier route.json
                 $controller_infos=explode('::',$value->controller);
                 $action=$controller_infos[1];
+
+                
 
                 if(class_exists($controller_infos[0])){
                     $controller = new $controller_infos[0]($request);

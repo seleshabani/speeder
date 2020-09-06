@@ -9,6 +9,15 @@
         "name":"about",
         "url":"/about"
     },
+    "#^/hello/[a-zA-Z]{1,}$#i":{
+        "controller": "\\App\\Controller\\DefaultController::hello",
+        "name":"hello",
+        "url":"/hello/:name",
+        "params":{
+            "name":""
+        },
+        "ls":"/"
+    },
     "#^/blog$#i": {
         "controller": "\\App\\Controller\\BlogController::index",
         "name": "blog",

@@ -14,7 +14,7 @@ class Router
 {
 
      /**
-     * contient toutes les routes de l'application
+     * contient toutes les routes de l'application|chargements des routes et checking
      */
     protected $routes__container;
 

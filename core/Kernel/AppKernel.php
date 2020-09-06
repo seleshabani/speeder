@@ -63,7 +63,7 @@ class AppKernel
         try {
             $db = new \PDO($dsn, $user, $password);
             return $db; 
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             echo 'Connexion échouée : ' . $e->getMessage();
         }
      }
@@ -72,7 +72,7 @@ class AppKernel
     {
         $path = $path = self::GetProjectDir() . self::Ds() . 'config' . self::Ds() . 'env.json';
         if(!file_exists($path)){
-            throw new Exception("Fichier introuvable env.json creer le dans /config", 1);
+            throw new \Exception("Fichier introuvable env.json creer le dans /config", 1);
             
         }else{
             $content = file_get_contents($path);

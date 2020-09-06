@@ -115,7 +115,7 @@ class Request
       }
 
       /**
-       * 
+       * Rétourne l'url actuellement appelé depuis le navigateur
        */
       public function Url()
       {
@@ -168,7 +168,7 @@ class Request
            return false;
           }  
         }else{
-          Dump($this->files->All());
+         // Dump($this->files->All());
         }
 
       }

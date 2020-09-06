@@ -10,21 +10,28 @@ use function Speeder\Debug\Dump;
  */
 class Controller
 {
-
+    /**
+     * Request | peut etre de httpFondation ou speeder\Request
+     */
     protected $request;
+    protected $response;
     protected $twig;
     protected $manager;
+    private $routes;
 
-    public function __construct(Request $request)
+    public function __construct($request,$response,$routes)
     {
         $this->request=$request;
+        $this->response=$response;
+        $this->routes=$routes;
         //chargement de la configuration de doctrine
         include AppKernel::GetProjectDir().AppKernel::Ds().'config'.AppKernel::Ds().'bootstrap.php';
       
         $path=AppKernel::GetProjectDir().AppKernel::Ds(). "Templates";
         $loader = new \Twig_Loader_Filesystem($path);
-        $this->twig = new \Twig_Environment($loader);
-        $this->extends();
+        $this->twig = new \Twig_Environment($loader,['debug'=>true]);
+        $this->twig->addExtension(new \Twig\Extension\DebugExtension());
+        $this->extends2();
         $this->manager=$entityManager ;
     }
 
@@ -38,12 +45,11 @@ class Controller
     {
        // require '../../autoload.php';
         extract($vars);
-          ob_start();
-          require(AppKernel::GetProjectDir().AppKernel::Ds().'Templates'.AppKernel::Ds().$views.'.php');
-          $content = ob_get_clean();
-          require(AppKernel::GetProjectDir() . AppKernel::Ds() . 'Templates' . AppKernel::Ds()."base.php");
+        ob_start();
+        require(AppKernel::GetProjectDir().AppKernel::Ds().'Templates'.AppKernel::Ds().$views.'.php');
+        $content = ob_get_clean();
+        require(AppKernel::GetProjectDir() . AppKernel::Ds() . 'Templates' . AppKernel::Ds()."base.php");
     
-        
     }
 
     /**
@@ -53,15 +59,30 @@ class Controller
      */
     public function RenderByTwig($views,$vars=[])
     {
+        ob_start();
         if($vars){
+           // Debugger::Dump($vars);
             echo $this->twig->render($views, $vars);
         }else{
             echo $this->twig->render($views);
         }
-        
+        $content=ob_get_clean();
+        $this->response->SetContent($content);
+        return $this->response;
     }
-
-    public function JsonResponse($var=[])
+    /**
+     * Rends une vue en utilisant la classe response de symfony
+     * méthode à adapter plus tard avec twig
+     */
+    public function RenderBySymfony(){
+        return 0;
+    }
+    /**
+     * Rends une réponse json
+     * @param string $views la vue à afficher
+     * @param array $vars les variables à passer à la vue
+     */
+    public function JsonResponse($vars=[])
     {
         $json=json_encode($vars);
         echo $json;
@@ -71,16 +92,17 @@ class Controller
 
     public function To404()
     {
-        $this->RenderByTwig('Error/404.html');
+       return $this->RenderByTwig('Error/404.html');
     }
 
     /** 
-     * ajoute la fonction path() à twig
+     * ajoute la fonction Speederpath() à twig
     */
     private function extends()
     {
 
-       $function = new \Twig_Function('path', function ($name,$params=[]) {
+       $functionSpeederPath = new \Twig_Function('SpeederPath', function ($name,$params=[]) 
+        {
         
             $path= AppKernel::GetProjectDir().AppKernel::Ds().'config'.AppKernel::Ds().'Route.json';
             $handle=file_get_contents($path);
@@ -89,7 +111,7 @@ class Controller
             $m=2;
             foreach ($routes as $k =>$v) {
                 
-                  if(property_exists($v,"name")){
+                if(property_exists($v,"name")){
                         
                     if($v->name==$name){
                         if(property_exists($v,"params")){
@@ -108,11 +130,37 @@ class Controller
                             return $v->url;
                         }
                     }
-                  }
+                }
             }
-         });
-        $this->twig->addFunction($function);
-    }
+        });
 
+
+        $this->twig->addFunction($functionSpeederPath);
+        //Ajouter ici la nouvelle fonction de gestion des liens à twig
+    }
+    /**
+     * 
+     */
+    private function extends2(){
+        $speederPath=new \Twig_Function('SpeederPath',function($name,$separator='/',$params=[]){
+          $url='';
+          $routes=$this->routes->all();
+
+           if (count($params)<1) {
+
+            
+            $pathPatern=$routes[$name]->getPath();
+
+           } else 
+           {
+            $pathPatern=substr($routes[$name]->getPath(),0,strpos($routes[$name]->getPath(),'{')-1).$separator.implode($separator,$params);
+               // Debugger::Dump('hhhhhh');
+           }
+           
+           return $pathPatern;
+
+        });
+        $this->twig->addFunction($speederPath);
+    }
 
 }
