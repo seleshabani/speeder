@@ -85,9 +85,12 @@ class Controller
     public function JsonResponse($vars=[])
     {
         $json=json_encode($vars);
+        ob_start();
         echo $json;
+        $content=ob_get_clean();
+        $this->response->SetContent($content);
         //modifier le content-type de la reponse pour specifier un renvois du json
-        die();
+        return $this->response;
     }
 
     public function To404()
