@@ -21,5 +21,8 @@
             "App\\": "App/",
             "Speeder\\": "core/"
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.5"
     }
 }
