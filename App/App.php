@@ -28,12 +28,16 @@ class App extends AppKernel
     }
     /**
      * lance l'application avec les composants de symfony
+     * @param HttpFoundationRequest $request
+     * @param Response
+     * $response
+     * @return Response
      */
-    public function HandleBySymfonyComponent(HttpFoundationRequest $request,Response $response,RouteCollection $routes)
+    public function HandleBySymfonyComponent(HttpFoundationRequest $request,Response $response,RouteCollection $routes) : Response
     {
        // Debugger::Dump('fff');
 
-        $context=new RequestContext();
+        $context=new RequestContext();//la req actuel de l'utilisateur
         $context->fromRequest($request);
         $matcher=new UrlMatcher($routes,$context);
         
