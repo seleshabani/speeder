@@ -14,7 +14,9 @@
         "doctrine/orm": "^2.6.2",
         "fzaninotto/faker": "^1.8",
         "symfony/http-foundation": "^5.1",
-        "symfony/routing": "^5.1"
+        "symfony/routing": "^5.1",
+        "php-di/php-di": "^6.2",
+        "ocramius/proxy-manager": "^2.2"
     },
     "autoload":{
         "psr-4":{
