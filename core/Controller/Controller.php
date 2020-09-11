@@ -1,9 +1,10 @@
 <?php
 namespace Speeder\Controller;
 
-use Speeder\Kernel\AppKernel;
-use Speeder\Debug\Debugger;
+use Loader;
 use Speeder\Http\Request;
+use Speeder\Debug\Debugger;
+use Speeder\Kernel\AppKernel;
 use function Speeder\Debug\Dump;
 /**
  * Controller de base
@@ -12,14 +13,36 @@ class Controller
 {
     /**
      * Request | peut etre de httpFondation ou speeder\Request
+     * @var Symfony\Component\HttpFoundation\Request | speeder\Http\Request
      */
     protected $request;
+
+    /**
+     * 
+     * @var Symfony\Component\HttpFoundation\Response | speeder\Http\Request
+     */
     protected $response;
+
+    /**
+     * 
+     * @var \Twig\Environment
+     */
     protected $twig;
+
+    /**
+     * le manager de doctrine pour la base des données
+     * @var Doctrine\ORM\EntityManager
+     */
     protected $manager;
+
+    /**
+     * 
+     */
     private $routes;
+
     /**
      * conteneur de gestion de dépendances
+     * @var Speeder\InjectionContainer\Container
      */
     protected $container;
 
@@ -29,15 +52,9 @@ class Controller
         $this->response=$response;
         $this->routes=$routes;
         $this->container=$container;
-        //chargement de la configuration de doctrine
-        include AppKernel::GetProjectDir().AppKernel::Ds().'config'.AppKernel::Ds().'bootstrap.php';
-      
-        $path=AppKernel::GetProjectDir().AppKernel::Ds(). "Templates";
-        $loader = new \Twig\Loader\FilesystemLoader($path);
-        $this->twig = new \Twig\Environment($loader,['debug'=>true]);
-        $this->twig->addExtension(new \Twig\Extension\DebugExtension());
-        $this->extends2();
-        $this->manager=$entityManager ;
+        $entityManager = $container->get('doctrine.config');
+        $this->twig = $container->get(\Twig\Environment::class);
+        $this->manager = $entityManager ;
     }
 
     /**
@@ -48,7 +65,6 @@ class Controller
      */
     public function Render($views,$vars=[])
     {
-       // require '../../autoload.php';
         extract($vars);
         ob_start();
         require(AppKernel::GetProjectDir().AppKernel::Ds().'Templates'.AppKernel::Ds().$views.'.php');
@@ -146,29 +162,4 @@ class Controller
         $this->twig->addFunction($functionSpeederPath);
         //Ajouter ici la nouvelle fonction de gestion des liens à twig
     }
-    /**
-     * 
-     */
-    private function extends2(){
-        $speederPath=new \Twig_Function('SpeederPath',function($name,$separator='/',$params=[]){
-          $url='';
-          $routes=$this->routes->all();
-
-           if (count($params)<1) {
-
-            
-            $pathPatern=$routes[$name]->getPath();
-
-           } else 
-           {
-            $pathPatern=substr($routes[$name]->getPath(),0,strpos($routes[$name]->getPath(),'{')-1).$separator.implode($separator,$params);
-               // Debugger::Dump('hhhhhh');
-           }
-           
-           return $pathPatern;
-
-        });
-        $this->twig->addFunction($speederPath);
-    }
-
 }

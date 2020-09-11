@@ -17,7 +17,7 @@ class Debugger
 
     public static function Init($request,$response,$routes,$container)
     {
-        self::$controller=new Controller($request,$response,$routes,$container);
+        self::$controller=$container->get(Controller::class);
         self::$response=$response;
     }
     /**
@@ -41,9 +41,9 @@ class Debugger
 
         
 
-        self::$controller->renderByTwig('Debug/debug.html',[
-        "value"=>$content,'className'=>$className]);
-        self::$response->send();
+         self::$controller->renderByTwig('Debug/debug.html',[
+         "value"=>$content,'className'=>$className]);
+         self::$response->send();
         die();
     }
 
@@ -51,14 +51,16 @@ class Debugger
      * $var
      * @param mixed 
      */
-    public function RDump($var)
+    public static function RDump($var)
     {
         if (is_null($var)) {
          die('variable nulle');   
         }
-        echo '<pre>';
+        echo '<code>';
+        echo '<pre style="font-size:15px;word-wrap:break">';
         var_dump($var);
         echo '</pre>';
+        echo '</code>';
         die();
     }
 }

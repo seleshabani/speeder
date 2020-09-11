@@ -12,11 +12,7 @@ use Speeder\InjectionContainer\Container;
 class AppKernel
 {
 
-    /**
-     * 
-     */
-    protected $pathtodb;
-
+    
     /**
      * le conteneur de gestion de dépendances
      * $container

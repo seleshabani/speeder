@@ -40,7 +40,7 @@ class Container
             return $this->container->get($id);
 
         } catch (\Throwable $th) {
-            Debugger::Dump('Une erreur est survenue');
+            Debugger::RDump('Une erreur est survenue : '.$th);
         }
     }
 

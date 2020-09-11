@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
 
 require '../vendor/autoload.php';
-$routes=require '../config/Routes.php';
+//$routes=require '../config/Routes.php';
 $dependences=require '../config/dependecies.php';
 
 //configuration du container externe utilisé
@@ -18,6 +18,7 @@ $Dicontainer=$builder->build();
 $container = new Speeder\InjectionContainer\Container($Dicontainer);
 
 //creation de la request et de la reponse en remplissant la req des informations global
+$routes=$container->get('_routes');
 $request=HttpFoundationRequest::createFromGlobals();
 $response=new Response();
 
