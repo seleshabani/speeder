@@ -18,18 +18,23 @@ class Controller
     protected $twig;
     protected $manager;
     private $routes;
+    /**
+     * conteneur de gestion de dépendances
+     */
+    protected $container;
 
-    public function __construct($request,$response,$routes)
+    public function __construct($request,$response,$routes,$container)
     {
         $this->request=$request;
         $this->response=$response;
         $this->routes=$routes;
+        $this->container=$container;
         //chargement de la configuration de doctrine
         include AppKernel::GetProjectDir().AppKernel::Ds().'config'.AppKernel::Ds().'bootstrap.php';
       
         $path=AppKernel::GetProjectDir().AppKernel::Ds(). "Templates";
-        $loader = new \Twig_Loader_Filesystem($path);
-        $this->twig = new \Twig_Environment($loader,['debug'=>true]);
+        $loader = new \Twig\Loader\FilesystemLoader($path);
+        $this->twig = new \Twig\Environment($loader,['debug'=>true]);
         $this->twig->addExtension(new \Twig\Extension\DebugExtension());
         $this->extends2();
         $this->manager=$entityManager ;
@@ -104,7 +109,7 @@ class Controller
     private function extends()
     {
 
-       $functionSpeederPath = new \Twig_Function('SpeederPath', function ($name,$params=[]) 
+       $functionSpeederPath = new \Twig\TwigFunction('SpeederPath', function ($name,$params=[]) 
         {
         
             $path= AppKernel::GetProjectDir().AppKernel::Ds().'config'.AppKernel::Ds().'Route.json';

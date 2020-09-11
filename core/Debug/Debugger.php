@@ -15,13 +15,13 @@ class Debugger
     private static $controller;
     private static $response;
 
-    public static function Init($request,$response,$routes)
+    public static function Init($request,$response,$routes,$container)
     {
-        self::$controller=new Controller($request,$response,$routes);
+        self::$controller=new Controller($request,$response,$routes,$container);
         self::$response=$response;
     }
     /**
-     * Affiche le contenue d'une variable
+     * Affiche le contenue d'une variable de façon conviaviale dans une page html formaté
      */
     public static function Dump($var)
     {
@@ -44,6 +44,21 @@ class Debugger
         self::$controller->renderByTwig('Debug/debug.html',[
         "value"=>$content,'className'=>$className]);
         self::$response->send();
+        die();
+    }
+
+    /**
+     * $var
+     * @param mixed 
+     */
+    public function RDump($var)
+    {
+        if (is_null($var)) {
+         die('variable nulle');   
+        }
+        echo '<pre>';
+        var_dump($var);
+        echo '</pre>';
         die();
     }
 }
