@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 use Speeder\Controller\Controller;
+use Speeder\Debug\Debugger;
 
 class DefaultController extends Controller
 {

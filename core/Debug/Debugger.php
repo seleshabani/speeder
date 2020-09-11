@@ -44,7 +44,7 @@ class Debugger
          self::$controller->renderByTwig('Debug/debug.html',[
          "value"=>$content,'className'=>$className]);
          self::$response->send();
-        die();
+         die();
     }
 
     /**
