@@ -12,3 +12,5 @@ $config=Setup::createAnnotationMetadataConfiguration([$path],$isDevMode);
 
 $conn = ['driver' => 'pdo_sqlite', 'path' => '', 'pdo' => App::Getdb()];
 $entityManager = EntityManager::create($conn, $config);
+
+return $entityManager;

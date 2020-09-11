@@ -1,7 +1,6 @@
 <?php
 namespace App\Controller;
 use Speeder\Controller\Controller;
-use Speeder\Annotation\MetadataForMethod;
 
 class DefaultController extends Controller
 {

@@ -16,6 +16,7 @@ use Speeder\Controller\Controller;
 
 class App extends AppKernel
 {
+    
     /**
      * lance l'application avec les composantes de la première version sans les élèments de symfony
      */
@@ -35,11 +36,11 @@ class App extends AppKernel
      */
     public function HandleBySymfonyComponent(HttpFoundationRequest $request,Response $response,RouteCollection $routes) : Response
     {
-       // Debugger::Dump('fff');
+        //Debugger::Dump($this->container->get(RequestContext::class));
 
-        $context=new RequestContext();//la req actuel de l'utilisateur
+        $context=$this->container->get(RequestContext::class);//la req actuel de l'utilisateur
         $context->fromRequest($request);
-        $matcher=new UrlMatcher($routes,$context);
+        $matcher=$this->container->get(UrlMatcher::class);// a besoin des routes et de la contexte voir dependecies.php
         
         try {
 
@@ -47,11 +48,12 @@ class App extends AppKernel
             $request->attributes->add($resultat);
             $className=substr($resultat['_controller'],0,strpos($resultat['_controller'],'@'));
             $method=substr($resultat['_controller'],strpos($resultat['_controller'],'@') + 1);
-            $controller=[new $className($request,$response,$routes),$method];
+            $controller=[new $className($request,$response,$routes,$this->container),$method];
             $res=call_user_func($controller);
             return $res;
         } catch (ResourceNotFoundException $e) {
-            $controller=new Controller($request,$response,$routes);
+
+            $controller=$this->container->get(Controller::class);
             return $controller->To404();
         }
     }

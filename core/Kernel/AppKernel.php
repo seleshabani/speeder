@@ -1,10 +1,10 @@
 <?php
 namespace Speeder\Kernel;
 
+use Psr\Container\ContainerInterface;
 use Speeder\Debug\Debugger;
 use Speeder\Http\Request;
-use function Speeder\Debug\Dump;
-
+use Speeder\InjectionContainer\Container;
 /**
  * le core de l'application
  * @author sele shabani <seleshabani4@gmail.com>
@@ -12,14 +12,20 @@ use function Speeder\Debug\Dump;
 class AppKernel
 {
 
-    protected $pathtodb;
-
+    
+    /**
+     * le conteneur de gestion de dépendances
+     * $container
+     * @var Speeder\InjectionContainer\Container
+     */
+    protected $container;
     /**
      * Demarre une session utilisateur
      */
-    public function __construct()
+    public function __construct(Container $container)
     {
         session_start();
+        $this->container=$container;
         
     }
 
@@ -70,7 +76,7 @@ class AppKernel
 
     public static function GetEnv()
     {
-        $path = $path = self::GetProjectDir() . self::Ds() . 'config' . self::Ds() . 'env.json';
+        $path = self::GetProjectDir() . self::Ds() . 'config' . self::Ds() . 'env.json';
         if(!file_exists($path)){
             throw new \Exception("Fichier introuvable env.json creer le dans /config", 1);
             
