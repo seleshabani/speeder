@@ -53,7 +53,7 @@ class App extends AppKernel
             return $res;
         } catch (ResourceNotFoundException $e) {
 
-            $controller=new Controller($request,$response,$routes,$this->container);
+            $controller=$this->container->get(Controller::class);
             return $controller->To404();
         }
     }
