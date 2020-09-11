@@ -143,7 +143,7 @@ class Application
         $qb = new QueryBuilder();
         $name=\trim($name);
 
-        $req = $db->query($qb->Create($name, $params));
+        $req = $db->query($qb->Create($name, $params)); 
         $pathtomanager = App::GetProjectDir() . App::Ds() . "App" . App::Ds() ."Manager" . App::Ds() .$name. "Manager.php";
         $pathtoentity = App::GetProjectDir() . App::Ds() . "App" . App::Ds() . "Entity" . App::Ds() .$name. "Entity.php";
 

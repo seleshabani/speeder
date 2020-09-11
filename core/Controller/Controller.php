@@ -52,7 +52,7 @@ class Controller
         $this->response=$response;
         $this->routes=$routes;
         $this->container=$container;
-        $entityManager = $container->get('doctrine.config');
+        $entityManager = $container->get('doctrine.config'); 
         $this->twig = $container->get(\Twig\Environment::class);
         $this->manager = $entityManager ;
     }
