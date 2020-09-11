@@ -40,7 +40,7 @@ class Writer
          */\n
         class " . $name . "Manager extends Manager
         {
-        
+            
         }";
     }
 

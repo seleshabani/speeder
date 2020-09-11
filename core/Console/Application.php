@@ -118,9 +118,9 @@ class Application
     {
         $db = $this->GetDb();
         $object = $this->GetEnv();
-        $db_i=$object->db_infos;
+        $db_i = $object->db_infos;
         echo "Entrez le nom de la table (MaTable) \n";
-        $name=fgets(STDIN);
+        $name = fgets(STDIN);
         while (!preg_match("#^[A-Za-z]#", $name)) {
             echo "Entrez un nom valide \n";
             $name = fgets(STDIN);
@@ -131,22 +131,25 @@ class Application
 
             echo "Entrez une collone \n";
             $colname = str_replace(" ","", fgets(STDIN));
-            $cols[]=$colname;
+            $cols[] = $colname;
             echo "Entrez son type \n";
             $type = fgets(STDIN);
-            $params[]=$colname.' '.$type;
+            $params[] = $colname.' '.\trim($type);
             echo "Voulez vous ajoutez une autre collone a cette table?(y/n) \n";
             $rep = fgets(STDIN);
 
          }
 
-        $qb=new QueryBuilder();
-        $req= $db->query($qb->Create($name, $params));
-        $pathtomanager = App::GetProjectDir() . App::Ds() . "App" . App::Ds() ."Manager" . App::Ds() .$name. "Manager.php";
-        $pathtoentity = App::GetProjectDir() . App::Ds() . "App" . App::Ds() . "Entity" . App::Ds() . $name . "Entity.php";
+        $qb = new QueryBuilder();
+        $name=\trim($name);
 
-        $textformanager= Writer::WriteInManager($name);
-        $textforentity=Writer::WriteInEntity($name,$cols);
+        $req = $db->query($qb->Create($name, $params)); 
+        $pathtomanager = App::GetProjectDir() . App::Ds() . "App" . App::Ds() ."Manager" . App::Ds() .$name. "Manager.php";
+        $pathtoentity = App::GetProjectDir() . App::Ds() . "App" . App::Ds() . "Entity" . App::Ds() .$name. "Entity.php";
+
+        $textformanager = Writer::WriteInManager($name);
+        $textforentity = Writer::WriteInEntity($name,$cols);
+
         file_put_contents($pathtomanager, $textformanager); 
         file_put_contents($pathtoentity, $textforentity); 
         echo "Votre Table ".$name." a ete creer avec succee!";
