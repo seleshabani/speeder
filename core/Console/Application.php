@@ -172,12 +172,13 @@ class Application
         while (preg_match("#y#i",$rep)) {
 
             echo "Entrez une collone \n";
-            $colname = str_replace(" ","", fgets(STDIN));
-            $cols[]=$colname;
+            //$colname = str_replace(" ","", fgets(STDIN));
+            $cols[]=\trim($colname);
             echo "Voulez vous ajoutez une autre collone a cette table?(y/n) \n";
             $rep = fgets(STDIN);
 
          }
+        $name = \trim($name);
         $pathtoentity = App::GetProjectDir() . App::Ds() . "App" . App::Ds() . "Entity" . App::Ds() . $name . ".php";
         $pathtofixture = App::GetProjectDir() . App::Ds() . "App" . App::Ds() . "Fixture" . App::Ds() . $name . ".php";
         $textforentity=Writer::WriteInEntity($name,$cols);
@@ -196,7 +197,7 @@ class Application
             $name = fgets(STDIN);
         }
 
-        $n=rtrim($name);
+        $n=\trim($name);
         $name='\\App\\Fixture\\'.$n;
         $fixture=new $name();
         if(is_callable([$fixture,'make'])){
