@@ -91,12 +91,13 @@ class Application
     {
         echo "Entrez le nom du controller(MangaController) \n";
         $reponse = fgets(STDIN);
-        $name=str_replace("Controller","",$reponse);
+       $name=str_replace("Controller","",\trim($reponse));
+
          while (!preg_match("#^[A-Za-z]+Controller$#",$reponse)) {
              echo "Entrez un nom valide \n";
-             $reponse = fgets(STDIN);
+             $reponse = \trim(fgets(STDIN));
         }
-         
+        
         $path= App::GetProjectDir().App::Ds()."App".App::Ds()."Controller".App::Ds().$reponse.".php";
         $path_directory_templates=App::GetProjectDir().App::Ds()."Templates".App::Ds().$name;
         $handle=fopen($path,'a+');
